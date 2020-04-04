@@ -22,14 +22,9 @@ type Props = {
 const PhotoList: FC<Props> = ({ photos }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [filteredPhotos, setFilteredPhotos] = useState(photos);
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 3000,
-  });
 
   useEffect(() => {
-    startTransition(() =>
-      setFilteredPhotos(isChecked ? photos.slice(0, 15) : photos)
-    );
+    setFilteredPhotos(isChecked ? photos.slice(0, 15) : photos);
   }, [isChecked]);
 
   const onChange = useCallback((e) => {
@@ -42,7 +37,6 @@ const PhotoList: FC<Props> = ({ photos }) => {
         <Form>
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check
-              disabled={isPending}
               checked={isChecked}
               onChange={onChange}
               type="checkbox"
