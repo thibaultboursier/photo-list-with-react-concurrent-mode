@@ -22,14 +22,14 @@ const App: FC = () => {
   const [photos, setPhotos] = useState<PhotoType[]>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadPhotos = useCallback(async () => {
+  const loadPhotos = async () => {
     setIsLoading(true);
     const photos = await fetchPhotos();
 
     setPhotos(photos);
     setIsLoading(false);
     hasEverLoadedPhotosRef.current = true;
-  }, []);
+  };
 
   const onButtonClick = () => {
     loadPhotos();

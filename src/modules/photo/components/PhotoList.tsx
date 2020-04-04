@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useState,
-  useCallback,
-  useEffect,
-  // @ts-ignore
-  useTransition,
-} from "react";
+import React, { FC, useState, useEffect } from "react";
 
 // Types
 import { Photo as PhotoType } from "../types";
@@ -27,9 +20,9 @@ const PhotoList: FC<Props> = ({ photos }) => {
     setFilteredPhotos(isChecked ? photos.slice(0, 15) : photos);
   }, [isChecked]);
 
-  const onChange = useCallback((e) => {
+  const onChange = () => {
     setIsChecked((previousValue) => !previousValue);
-  }, []);
+  };
 
   return (
     <section className="mt-4">
