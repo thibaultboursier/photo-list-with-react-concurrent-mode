@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useState, useCallback, useRef } from "react";
 
 // Styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,6 +18,7 @@ import PhotoList from "./modules/photo/components/PhotoList";
 import { fetchPhotos } from "./modules/photo/api";
 
 const App: FC = () => {
+  const hasEverLoadedPhotosRef = useRef(false);
   const [photos, setPhotos] = useState<PhotoType[]>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +28,7 @@ const App: FC = () => {
 
     setPhotos(photos);
     setIsLoading(false);
+    hasEverLoadedPhotosRef.current = true;
   }, []);
 
   const onButtonClick = () => {
@@ -40,7 +42,7 @@ const App: FC = () => {
       </Row>
       <Row>
         <Button disabled={isLoading} onClick={onButtonClick}>
-          {isLoading ? (
+          {isLoading && (
             <>
               {" "}
               <Spinner
@@ -53,8 +55,9 @@ const App: FC = () => {
               />
               Loading...
             </>
-          ) : (
-            "Load"
+          )}
+          {!isLoading && (
+            <>{hasEverLoadedPhotosRef.current ? "Reload" : "Load"}</>
           )}
         </Button>
       </Row>
